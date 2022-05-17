@@ -1,10 +1,10 @@
 package ua.edu.sumdu.j2se.kush.tasks;
 
 /**
- * The Task class that describes the user's tasks. Tasks may or may not be
- * repeated. Non-recurring tasks have a specific execution time. Recurring tasks
- * have a start time, an end time, and a recurrence interval. Non-active tasks
- * are never executed.
+ * The Task class that describes the user's tasks.
+ * <p>Tasks may or may not be repeated. Non-recurring tasks have a specific
+ * execution time. Recurring tasks have a start time, an end time, and a
+ * recurrence interval. Non-active tasks are never executed.</p>
  *
  * @author <a href="mailto:vitaly.kush@gmail.com">Vitalii Kush</a>
  */
@@ -12,6 +12,7 @@ public class Task {
 
     /**
      * The value that is returned if the task does not have a next run time.
+     *
      * @see #nextTimeAfter(int)
      */
     public static final int NO_NEXT_TIME_VALUE = -1;
@@ -52,7 +53,7 @@ public class Task {
     private boolean isRepeated;
 
     /**
-     * Class constructor that defines a non-repeating task.
+     * This class constructor defines a non-recurring task.
      *
      * @param title task name.
      * @param time  task time.
@@ -63,7 +64,7 @@ public class Task {
     }
 
     /**
-     * A class constructor that defines a recurring task.
+     * This class constructor defines a recurring task.
      *
      * @param title    task name.
      * @param start    task start time.
@@ -79,7 +80,7 @@ public class Task {
     }
 
     /**
-     * Gets the task name.
+     * Returns the task name.
      *
      * @return the task name.
      */
@@ -116,10 +117,10 @@ public class Task {
     }
 
     /**
-     * Gets the time of the task if the task is non-repeatable, otherwise the
+     * Returns the time of the task if the task is non-repeatable, otherwise the
      * start time of the task.
      *
-     * @return the task <b>time</b> or the task <b>start time</b>.
+     * @return the task time or the task start time.
      */
     public int getTime() {
         return !isRepeated ? time : startTime;
@@ -150,7 +151,7 @@ public class Task {
     }
 
     /**
-     * Gets the task start time if the task is repeatable, the task time
+     * Returns the task start time if the task is repeatable, the task time
      * otherwise.
      *
      * @return the task start time or time.
@@ -169,7 +170,7 @@ public class Task {
     }
 
     /**
-     * Gets the task end time if the task is repeatable, the task time
+     * Returns the task end time if the task is repeatable, the task time
      * otherwise.
      *
      * @return the end time or the time.
@@ -188,7 +189,7 @@ public class Task {
     }
 
     /**
-     * Gets the task's recurrence interval if the task is repeatable, and 0
+     * Returns the task's recurrence interval if the task is repeatable, and 0
      * otherwise.
      *
      * @return recurrence interval or 0.
@@ -207,7 +208,7 @@ public class Task {
     }
 
     /**
-     * Gets the task recurrence status.
+     * Returns the task recurrence status.
      *
      * @return <b>true</b> if the task is repeatable, <b>false</b> otherwise.
      */
@@ -225,15 +226,17 @@ public class Task {
     }
 
     /**
-     * Calculates the next execution time for the task.<br>
-     * <p></p>The method returns {@link #NO_NEXT_TIME_VALUE} in the following
-     * cases:</p>
+     * Calculates the next execution time for the task.
+     * <p>The method returns {@link #NO_NEXT_TIME_VALUE} in the following
+     * cases:
      * <ul>
      * <li>the task is not active.</li>
      * <li>the non-repetitive task time less than current time</li>
      * <li>the repetitive task end time less than current time</li>
      * <li>the repetitive task next time more than end time</li>
      * </ul>
+     * Otherwise, returns the next time the task should be executed.
+     * </p>
      *
      * @param current current time.
      * @return the next time of the task or {@link #NO_NEXT_TIME_VALUE}.
@@ -263,7 +266,7 @@ public class Task {
     }
 
     /**
-     * Gets a string representation of the task.
+     * Returns a string representation of the task.
      *
      * @return string representation of the task.
      */
