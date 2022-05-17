@@ -228,15 +228,14 @@ public class Task {
     /**
      * Calculates the next execution time for the task.
      * <p>The method returns {@link #NO_NEXT_TIME_VALUE} in the following
-     * cases:
+     * cases:</p>
      * <ul>
      * <li>the task is not active.</li>
      * <li>the non-repetitive task time less than current time</li>
      * <li>the repetitive task end time less than current time</li>
      * <li>the repetitive task next time more than end time</li>
      * </ul>
-     * Otherwise, returns the next time the task should be executed.
-     * </p>
+     * <p>Otherwise, returns the next time the task should be executed.</p>
      *
      * @param current current time.
      * @return the next time of the task or {@link #NO_NEXT_TIME_VALUE}.
