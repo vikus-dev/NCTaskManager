@@ -1,19 +1,58 @@
 package ua.edu.sumdu.j2se.kush.tasks;
 
 /**
+ * The Task class that describes the user's tasks. Tasks may or may not be
+ * repeated. Non-recurring tasks have a specific execution time. Recurring tasks
+ * have a start time, an end time, and a recurrence interval. Non-active tasks
+ * are never executed.
+ *
  * @author <a href="mailto:vitaly.kush@gmail.com">Vitalii Kush</a>
  */
 public class Task {
+
+    /**
+     * The value that is returned if the task does not have a next run time.
+     * @see #nextTimeAfter(int)
+     */
+    public static final int NO_NEXT_TIME_VALUE = -1;
+
+    /**
+     * Task name (brief task description).
+     */
     private String title;
+
+    /**
+     * Time to complete a non-recurring task.
+     */
     private int time;
+
+    /**
+     * Start time of recurring task.
+     */
     private int startTime;
+
+    /**
+     * End time for recurring task.
+     */
     private int endTime;
+
+    /**
+     * The recurrence interval for the recurring task.
+     */
     private int repeatInterval;
+
+    /**
+     * Task active or inactive status.
+     */
     private boolean isActive;
+
+    /**
+     * Indicates whether the task is recurring or not.
+     */
     private boolean isRepeated;
 
     /**
-     * Class constructor specifying a non-repeatable task.
+     * Class constructor that defines a non-repeating task.
      *
      * @param title task name.
      * @param time  task time.
@@ -24,7 +63,7 @@ public class Task {
     }
 
     /**
-     * Class constructor specifying a repeatable task.
+     * A class constructor that defines a recurring task.
      *
      * @param title    task name.
      * @param start    task start time.
@@ -58,7 +97,7 @@ public class Task {
     }
 
     /**
-     * Gets the active or inactive status of the task.
+     * Gets the active or inactive status of a task.
      *
      * @return <b>true</b> if the task is active, <b>false</b> otherwise.
      */
@@ -77,10 +116,10 @@ public class Task {
     }
 
     /**
-     * Gets the task time if the task is non-repeatable, the task start time
-     * otherwise.
+     * Gets the time of the task if the task is non-repeatable, otherwise the
+     * start time of the task.
      *
-     * @return the task time or the task start time.
+     * @return the task <b>time</b> or the task <b>start time</b>.
      */
     public int getTime() {
         return !isRepeated ? time : startTime;
@@ -100,8 +139,7 @@ public class Task {
      * Sets the task period and makes it repeatable at regular intervals.
      *
      * @param start    the start time of the task.
-     * @param end      the end time of the task (should be more than the start
-     *                 time).
+     * @param end      the end time of the task.
      * @param interval the recurrence interval of the task.
      */
     public void setTime(int start, int end, int interval) {
@@ -150,7 +188,7 @@ public class Task {
     }
 
     /**
-     * Gets the task recurrence interval if the task is repeatable, 0
+     * Gets the task's recurrence interval if the task is repeatable, and 0
      * otherwise.
      *
      * @return recurrence interval or 0.
@@ -162,10 +200,10 @@ public class Task {
     /**
      * Sets the task recurrence interval.
      *
-     * @param interval the task recurrence interval
+     * @param interval the task recurrence interval.
      */
     public void setRepeatInterval(int interval) {
-        this.repeatInterval = interval;
+        repeatInterval = interval;
     }
 
     /**
@@ -187,8 +225,9 @@ public class Task {
     }
 
     /**
-     * Calculates the next execution time for the task.<br> The method returns
-     * -1 in the following cases:
+     * Calculates the next execution time for the task.<br>
+     * <p></p>The method returns {@link #NO_NEXT_TIME_VALUE} in the following
+     * cases:</p>
      * <ul>
      * <li>the task is not active.</li>
      * <li>the non-repetitive task time less than current time</li>
@@ -197,32 +236,37 @@ public class Task {
      * </ul>
      *
      * @param current current time.
-     * @return the next time of the task or -1 .
+     * @return the next time of the task or {@link #NO_NEXT_TIME_VALUE}.
      */
     public int nextTimeAfter(int current) {
-
         if (!isActive) {
-            return -1;
+            return NO_NEXT_TIME_VALUE;
         }
 
         if (!isRepeated) {
-            return current < time ? time : -1;
+            return current < time ? time : NO_NEXT_TIME_VALUE;
         }
 
         if (current > endTime) {
-            return -1;
+            return NO_NEXT_TIME_VALUE;
         }
 
         if (current < startTime) {
             return startTime;
         }
 
-        int nextTime = ((current - startTime) / repeatInterval + 1)
-                * repeatInterval + startTime;
+        int nextTime = startTime
+                + ((current - startTime) / repeatInterval + 1)
+                * repeatInterval;
 
-        return nextTime <= endTime ? nextTime : -1;
+        return nextTime <= endTime ? nextTime : NO_NEXT_TIME_VALUE;
     }
 
+    /**
+     * Gets a string representation of the task.
+     *
+     * @return string representation of the task.
+     */
     @Override
     public String toString() {
         return "Task{"
