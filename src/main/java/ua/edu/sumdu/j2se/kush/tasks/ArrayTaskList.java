@@ -43,6 +43,10 @@ public class ArrayTaskList {
             taskList = new Task[capacity];
         } else if (capacity == 0) {
             taskList = EMPTY_TASK_LIST;
+        } else {
+            // TODO: fix initialization with negative capacity
+            // temporary stub to prevent initialization with negative capacity
+            taskList = new Task[DEFAULT_CAPACITY];
         }
     }
 
