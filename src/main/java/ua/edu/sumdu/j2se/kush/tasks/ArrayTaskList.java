@@ -1,8 +1,5 @@
 package ua.edu.sumdu.j2se.kush.tasks;
 
-import java.lang.reflect.Array;
-import java.util.Arrays;
-
 public class ArrayTaskList {
 
     /**
