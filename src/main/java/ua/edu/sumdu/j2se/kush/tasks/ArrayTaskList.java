@@ -1,5 +1,7 @@
 package ua.edu.sumdu.j2se.kush.tasks;
 
+import java.util.Arrays;
+
 public class ArrayTaskList {
 
     /**
@@ -142,10 +144,42 @@ public class ArrayTaskList {
      */
     public int indexOf(Task task) {
         for (int i = 0; i < size; i++) {
-            if (task.equals(taskList[i])) {
+            if (task.getTitle().toLowerCase().equals(
+                    taskList[i].getTitle().toLowerCase())) {
                 return i;
             }
         }
         return -1;
+    }
+
+    /**
+     * Returns a filtered list of tasks that contains tasks that must run at
+     * least once in the specified time interval.
+     *
+     * @param from the start time.
+     * @param to   the end time.
+     * @return an ArrayTaskList object containing tasks matching the time
+     *         filter.
+     */
+    public ArrayTaskList incoming(int from, int to) {
+        ArrayTaskList filteredList = new ArrayTaskList();
+
+        for (int i = 0; i < size; i++) {
+            if (taskList[i].isActive()
+                    && taskList[i].nextTimeAfter(from) > from
+                    && taskList[i].nextTimeAfter(from) <= to) {
+                filteredList.add(taskList[i]);
+            }
+        }
+
+        return filteredList;
+    }
+
+    @Override
+    public String toString() {
+        return "ArrayTaskList{" +
+                "taskList=" + Arrays.toString(taskList) +
+                ", size=" + size +
+                '}';
     }
 }
