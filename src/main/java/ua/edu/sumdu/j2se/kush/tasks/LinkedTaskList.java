@@ -53,6 +53,10 @@ public class LinkedTaskList {
      * @param task task to be added to this list.
      */
     public void add(Task task) {
+        if (task == null) {
+            throw new IllegalArgumentException("The task must be non-null.");
+        }
+
         Node newNode = new Node(task);
 
         if (head != null) {
