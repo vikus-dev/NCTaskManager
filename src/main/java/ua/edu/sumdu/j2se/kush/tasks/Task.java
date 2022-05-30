@@ -52,7 +52,11 @@ public class Task {
      * @param time  task time.
      */
     public Task(String title, int time) {
-        this.title = title;
+        if (time < 0) {
+            throw new IllegalArgumentException("The time must be"
+                    + " a positive number.");
+        }
+            this.title = title;
         this.time = time;
     }
 
@@ -65,6 +69,18 @@ public class Task {
      * @param interval task recurrence interval.
      */
     public Task(String title, int start, int end, int interval) {
+        if (start < 0) {
+            throw new IllegalArgumentException("The start time must be"
+                    + " a positive number.");
+        }
+        if (end < 0) {
+            throw new IllegalArgumentException("The end time must be"
+                    + " a positive number.");
+        }
+        if (interval <= 0) {
+            throw new IllegalArgumentException("The start time must be"
+                    + " a positive number and greater than 0.");
+        }
         this.title = title;
         startTime = start;
         endTime = end;
