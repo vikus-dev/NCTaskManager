@@ -153,6 +153,18 @@ public class Task {
      * @param interval the recurrence interval of the task.
      */
     public void setTime(int start, int end, int interval) {
+        if (start < 0) {
+            throw new IllegalArgumentException("The start time must be"
+                    + " a positive number.");
+        }
+        if (end < 0) {
+            throw new IllegalArgumentException("The end time must be"
+                    + " a positive number.");
+        }
+        if (interval <= 0) {
+            throw new IllegalArgumentException("The start time must be"
+                    + " a positive number and greater than 0.");
+        }
         startTime = start;
         endTime = end;
         repeatInterval = interval;
@@ -175,6 +187,10 @@ public class Task {
      * @param start the start time of the task.
      */
     public void setStartTime(int start) {
+        if (start < 0) {
+            throw new IllegalArgumentException("The start time must be"
+                    + " a positive number.");
+        }
         startTime = start;
     }
 
@@ -194,6 +210,10 @@ public class Task {
      * @param end the task end time.
      */
     public void setEndTime(int end) {
+        if (end < 0) {
+            throw new IllegalArgumentException("The end time must be"
+                    + " a positive number.");
+        }
         endTime = end;
     }
 
@@ -213,6 +233,10 @@ public class Task {
      * @param interval the task recurrence interval.
      */
     public void setRepeatInterval(int interval) {
+        if (interval <= 0) {
+            throw new IllegalArgumentException("The start time must be"
+                    + " a positive number and greater than 0.");
+        }
         repeatInterval = interval;
     }
 
