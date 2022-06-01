@@ -1,39 +1,26 @@
 package ua.edu.sumdu.j2se.kush.tasks;
 
-
-public class LinkedTaskList {
+/**
+ * A list of tasks based on a linked list.
+ */
+public class LinkedTaskList extends AbstractTaskList {
 
     /**
-     * The first (head) element of this list.
+     * The first element of this list.
      *
-     * @see
      */
     private Node head;
 
-    /**
-     * The size of this list (the number of elements it contains).
-     */
-    private int size;
-
-    /**
-     * Returns the number of elements in this list.
-     *
-     * @return the number of elements in this list
-     */
-    public int size() {
-        return size;
+    @Override
+    public ListTypes.types getListType() {
+        return ListTypes.types.LINKED;
     }
 
-    /**
-     * Returns a task from this list at specified position.
-     *
-     * @param index of a task to return
-     * @return the task at specified position of this list
-     */
+    @Override
     public Task getTask(int index) {
         if (index < 0 || index >= size) {
-            throw new IndexOutOfBoundsException("Your index [" + index + "] is "
-                    + "out of range [0 - " + (size - 1) + "]");
+            throw new IndexOutOfBoundsException("Index: " + index
+                    + ", size: " + size);
         }
 
         Node node = head;
@@ -47,11 +34,7 @@ public class LinkedTaskList {
         return node.data;
     }
 
-    /**
-     * Adds a task to the beginning of this list.
-     *
-     * @param task task to be added to this list.
-     */
+    @Override
     public void add(Task task) {
         if (task == null) {
             throw new IllegalArgumentException("The task must be non-null.");
@@ -67,13 +50,7 @@ public class LinkedTaskList {
         size++;
     }
 
-    /**
-     * Removes specified task from this list and returns true if the task is in
-     * this list, otherwise returns false.
-     *
-     * @param task task to be removed from this list, if present.
-     * @return true if the task has been removed from this list.
-     */
+    @Override
     public boolean remove(Task task) {
         if (size == 0 || task == null) {
             return false;
@@ -97,31 +74,6 @@ public class LinkedTaskList {
         }
 
         return false;
-    }
-
-    /**
-     * Returns a filtered list of tasks that contains tasks that must run at
-     * least once in the specified time interval.
-     *
-     * @param from the start time.
-     * @param to   the end time.
-     * @return an ArrayTaskList object containing tasks matching the time
-     *         filter.
-     */
-    public LinkedTaskList incoming(int from, int to) {
-        LinkedTaskList taskList = new LinkedTaskList();
-        if (size == 0) {
-            return taskList;
-        }
-        Node node = head;
-        while (node != null) {
-            int nextTime = node.data.nextTimeAfter(from);
-            if (from < nextTime && nextTime <= to) {
-                taskList.add(node.data);
-            }
-            node = node.next;
-        }
-        return taskList;
     }
 
     private static class Node {
