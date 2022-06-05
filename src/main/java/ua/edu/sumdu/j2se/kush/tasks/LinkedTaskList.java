@@ -7,9 +7,13 @@ public class LinkedTaskList extends AbstractTaskList {
 
     /**
      * The first element of this list.
-     *
      */
     private Node head;
+
+    /**
+     * The last element of this list
+     */
+    private Node tail;
 
     @Override
     public ListTypes.types getListType() {
@@ -18,35 +22,53 @@ public class LinkedTaskList extends AbstractTaskList {
 
     @Override
     public Task getTask(int index) {
+        return node(index).data;
+    }
+
+    /**
+     * Returns node at specified position.
+     *
+     * @param index position of the node.
+     * @return node at specified position.
+     */
+    private Node node(int index) {
         if (index < 0 || index >= size) {
             throw new IndexOutOfBoundsException("Index: " + index
                     + ", size: " + size);
         }
-
-        Node node = head;
-        int idx = 0;
-
-        while (idx != index) {
-            node = node.next;
-            idx++;
+        Node x;
+        if (index < size / 2) {
+            x = head;
+            for (int i = 0; i < index; i++) {
+                x = x.next;
+                i++;
+            }
+        } else {
+            x = tail;
+            for (int i = size - 1; i > index; i--) {
+                x = x.prev;
+                i--;
+            }
         }
-
-        return node.data;
+        return x;
     }
 
     @Override
     public void add(Task task) {
         if (task == null) {
-            throw new IllegalArgumentException("The task must be non-null.");
+            throw new IllegalArgumentException("The task cannot be null.");
         }
 
-        Node newNode = new Node(task);
+        Node x = new Node(task);
 
-        if (head != null) {
-            newNode.next = head;
+        if (head == null) {
+            head = x;
+            tail = head;
+        } else {
+            x.prev = tail == head ? head : tail;
+            tail.next = x;
+            tail = x;
         }
-
-        head = newNode;
         size++;
     }
 
@@ -56,29 +78,46 @@ public class LinkedTaskList extends AbstractTaskList {
             return false;
         }
 
-        Node currentNode = head;
-        Node previousNode = null;
-
-        while (currentNode != null) {
-            if (currentNode.data.equals(task)) {
-                if (currentNode == head) {
-                    head = currentNode.next;
-                } else {
-                    previousNode.next = currentNode.next;
-                }
-                size--;
+        Node x = head;
+        while (x != null) {
+            if (x.data.equals(task)) {
+                unlink(x);
                 return true;
             }
-            previousNode = currentNode;
-            currentNode = currentNode.next;
+            x = x.next;
         }
 
         return false;
     }
 
+    /**
+     * Removes (unbinds) the specified node from this list.
+     * @param x node to unlink.
+     */
+    private void unlink(Node x) {
+        final Node next = x.next;
+        final Node prev = x.prev;
+
+        if (prev == null) {
+            head = next;
+        } else {
+            prev.next = next;
+            x.prev = null;
+        }
+
+        if (next == null) {
+            tail = prev;
+        } else {
+            next.prev = prev;
+            x.next = null;
+        }
+        size--;
+    }
+
     private static class Node {
         private final Task data;
         private Node next;
+        private Node prev;
 
         Node(Task data) {
             this.data = data;
