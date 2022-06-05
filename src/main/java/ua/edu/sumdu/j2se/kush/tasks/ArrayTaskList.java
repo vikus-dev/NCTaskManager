@@ -1,5 +1,8 @@
 package ua.edu.sumdu.j2se.kush.tasks;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /**
  * A list of tasks based on an array.
  */
@@ -128,5 +131,41 @@ public class ArrayTaskList extends AbstractTaskList {
             }
         }
         return -1;
+    }
+
+    @Override
+    public Iterator<Task> iterator() {
+        return new Iterator<Task>() {
+            private int cursor;
+            private int lastRet = -1;
+
+            @Override
+            public boolean hasNext() {
+                return cursor != size;
+            }
+
+            @Override
+            public Task next() {
+                int i = cursor;
+                if (cursor >= size) {
+                    throw new NoSuchElementException();
+                }
+                Task[] tasks = ArrayTaskList.this.taskList;
+                cursor = i + 1;
+                return tasks[lastRet = i];
+            }
+
+            @Override
+            public void remove() {
+                if (lastRet < 0) {
+                    throw new IllegalStateException(
+                            "Method remove() should be called after next()");
+                }
+
+                ArrayTaskList.this.remove(ArrayTaskList.this.taskList[lastRet]);
+                cursor = lastRet;
+                lastRet = -1;
+            }
+        };
     }
 }

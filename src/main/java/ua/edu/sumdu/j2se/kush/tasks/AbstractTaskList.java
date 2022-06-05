@@ -2,11 +2,12 @@ package ua.edu.sumdu.j2se.kush.tasks;
 
 /**
  * AbstractTaskList
+ *
  * @see ArrayTaskList
  * @see LinkedTaskList
  * @see ListTypes
  */
-public abstract class AbstractTaskList {
+public abstract class AbstractTaskList implements Iterable<Task> {
 
     /**
      * The size of this list (the number of elements it contains).

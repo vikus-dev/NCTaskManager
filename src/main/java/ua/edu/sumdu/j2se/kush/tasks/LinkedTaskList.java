@@ -1,5 +1,8 @@
 package ua.edu.sumdu.j2se.kush.tasks;
 
+import java.util.Iterator;
+import java.util.NoSuchElementException;
+
 /**
  * A list of tasks based on a linked list.
  */
@@ -92,6 +95,7 @@ public class LinkedTaskList extends AbstractTaskList {
 
     /**
      * Removes (unbinds) the specified node from this list.
+     *
      * @param x node to unlink.
      */
     private void unlink(Node x) {
@@ -112,6 +116,42 @@ public class LinkedTaskList extends AbstractTaskList {
             x.next = null;
         }
         size--;
+    }
+
+    @Override
+    public Iterator<Task> iterator() {
+        return new Iterator<Task>() {
+            int cursor;
+            Node next = head;
+            Node lastReturned;
+
+            @Override
+            public boolean hasNext() {
+                return cursor < size;
+            }
+
+            @Override
+            public Task next() {
+                if (!hasNext()) {
+                    throw new NoSuchElementException();
+                }
+                lastReturned = next;
+                next = next.next;
+                cursor++;
+                return lastReturned.data;
+            }
+
+            @Override
+            public void remove() {
+                if (lastReturned == null) {
+                    throw new IllegalStateException(
+                            "Method remove() should be called after next()");
+                }
+                unlink(lastReturned);
+                lastReturned = null;
+                cursor--;
+            }
+        };
     }
 
     private static class Node {
