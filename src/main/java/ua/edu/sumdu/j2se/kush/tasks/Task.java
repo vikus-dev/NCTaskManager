@@ -56,7 +56,7 @@ public class Task {
             throw new IllegalArgumentException("The time must be"
                     + " a positive number.");
         }
-            this.title = title;
+        this.title = title;
         this.time = time;
     }
 
@@ -294,5 +294,38 @@ public class Task {
                 * repeatInterval;
 
         return nextTime <= endTime ? nextTime : -1;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+
+        if (this.hashCode() != o.hashCode()){
+            return false;
+        }
+
+        return time == task.time
+                && startTime == task.startTime
+                && endTime == task.endTime
+                && repeatInterval == task.repeatInterval
+                && isActive == task.isActive
+                && isRepeated == task.isRepeated
+                && title.equals(task.title);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 1;
+        result = 31 * result + title.hashCode();
+        result = 31 * result + startTime;
+        result = 31 * result + endTime;
+        result = 31 * result + time;
+        result = 31 * result + repeatInterval;
+        result = 31 * result + ((Boolean) isActive).hashCode();
+        result = 31 * result + ((Boolean) isRepeated).hashCode();
+
+        return result;
     }
 }
