@@ -93,4 +93,16 @@ public abstract class AbstractTaskList implements Iterable<Task> {
         }
         return result;
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (Iterator<Task> itr = iterator(); itr.hasNext(); ) {
+            sb.append(itr.next().toString());
+            sb.append(itr.hasNext() ? ", " : "");
+        }
+        sb.append("]");
+        return sb.toString();
+    }
 }
