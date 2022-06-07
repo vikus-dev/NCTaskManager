@@ -153,7 +153,7 @@ public class LinkedTaskList extends AbstractTaskList {
             }
         };
     }
-
+    
     private static class Node {
         private final Task data;
         private Node next;

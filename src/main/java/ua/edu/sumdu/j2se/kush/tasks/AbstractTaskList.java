@@ -1,5 +1,7 @@
 package ua.edu.sumdu.j2se.kush.tasks;
 
+import java.util.Iterator;
+
 /**
  * AbstractTaskList
  *
@@ -63,7 +65,32 @@ public abstract class AbstractTaskList implements Iterable<Task> {
                 list.add(task);
             }
         }
-
         return list;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof AbstractTaskList)) return false;
+        AbstractTaskList obj = (AbstractTaskList) o;
+        if (this.size != obj.size) return false;
+
+        Iterator<Task> itr1 = iterator();
+        Iterator<Task> itr2 = obj.iterator();
+        while (itr1.hasNext()) {
+            if (!itr1.next().equals(itr2.next())) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 1;
+        for (Task task : this) {
+            result = 31 * result + (task == null ? 0 : task.hashCode());
+        }
+        return result;
     }
 }
