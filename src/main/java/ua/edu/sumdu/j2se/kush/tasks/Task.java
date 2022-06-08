@@ -8,7 +8,7 @@ package ua.edu.sumdu.j2se.kush.tasks;
  *
  * @author <a href="mailto:vitaly.kush@gmail.com">Vitalii Kush</a>
  */
-public class Task {
+public class Task implements Cloneable {
 
     /**
      * Task name (brief task description).
@@ -302,7 +302,7 @@ public class Task {
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
 
-        if (this.hashCode() != o.hashCode()){
+        if (this.hashCode() != o.hashCode()) {
             return false;
         }
 
@@ -327,6 +327,17 @@ public class Task {
         result = 31 * result + ((Boolean) isRepeated).hashCode();
 
         return result;
+    }
+
+    @Override
+    public Task clone() {
+        Task clone = null;
+        try {
+            clone = (Task) super.clone();
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+        return clone;
     }
 
     @Override

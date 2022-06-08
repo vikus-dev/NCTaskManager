@@ -56,10 +56,9 @@ public abstract class AbstractTaskList implements Iterable<Task> {
      */
     public abstract boolean remove(Task task);
 
-    public AbstractTaskList incoming(int from, int to) {
+    public final AbstractTaskList incoming(int from, int to) {
         AbstractTaskList list = TaskListFactory.createTaskList(getListType());
-        for (int i = 0; i < size; i++) {
-            Task task = this.getTask(i);
+        for (Task task: this) {
             int nextTime = task.nextTimeAfter(from);
             if (from < nextTime && nextTime < to) {
                 list.add(task);
@@ -88,6 +87,7 @@ public abstract class AbstractTaskList implements Iterable<Task> {
     @Override
     public int hashCode() {
         int result = 1;
+        result = 31 * result + size;
         for (Task task : this) {
             result = 31 * result + (task == null ? 0 : task.hashCode());
         }
