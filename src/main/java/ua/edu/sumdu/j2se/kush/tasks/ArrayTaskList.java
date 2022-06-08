@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 /**
  * A list of tasks based on an array.
  */
-public class ArrayTaskList extends AbstractTaskList {
+public class ArrayTaskList extends AbstractTaskList implements Cloneable {
 
     /**
      * An array to store added tasks.
@@ -167,5 +167,25 @@ public class ArrayTaskList extends AbstractTaskList {
                 lastRet = -1;
             }
         };
+    }
+
+    @Override
+    public ArrayTaskList clone() {
+        try {
+            ArrayTaskList clone = (ArrayTaskList) super.clone();
+            clone.taskList = new Task[size];
+            clone.size = 0;
+            for (Task task : this) {
+                clone.add(task.clone());
+            }
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "ArrayTaskList" + super.toString();
     }
 }
