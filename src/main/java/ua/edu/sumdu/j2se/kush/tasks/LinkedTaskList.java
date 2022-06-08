@@ -6,7 +6,7 @@ import java.util.NoSuchElementException;
 /**
  * A list of tasks based on a linked list.
  */
-public class LinkedTaskList extends AbstractTaskList {
+public class LinkedTaskList extends AbstractTaskList implements Cloneable {
 
     /**
      * The first element of this list.
@@ -153,7 +153,27 @@ public class LinkedTaskList extends AbstractTaskList {
             }
         };
     }
-    
+
+    @Override
+    public LinkedTaskList clone() {
+        try {
+            LinkedTaskList clone = (LinkedTaskList) super.clone();
+            clone.size = 0;
+            clone.head = clone.tail = null;
+            for (Task task : this) {
+                clone.add(task.clone());
+            }
+            return clone;
+        } catch (CloneNotSupportedException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "LinkedTaskList" + super.toString();
+    }
+
     private static class Node {
         private final Task data;
         private Node next;
