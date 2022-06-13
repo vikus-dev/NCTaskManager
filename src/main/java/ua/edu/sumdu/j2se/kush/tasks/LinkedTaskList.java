@@ -1,6 +1,9 @@
 package ua.edu.sumdu.j2se.kush.tasks;
 
 import java.util.Iterator;
+import java.util.List;
+import java.util.LinkedList;
+import java.util.stream.Stream;
 import java.util.NoSuchElementException;
 
 /**
@@ -11,12 +14,12 @@ public class LinkedTaskList extends AbstractTaskList implements Cloneable {
     /**
      * The first element of this list.
      */
-    private Node head;
+    private Node first;
 
     /**
      * The last element of this list
      */
-    private Node tail;
+    private Node last;
 
     @Override
     public ListTypes.types getListType() {
@@ -25,7 +28,7 @@ public class LinkedTaskList extends AbstractTaskList implements Cloneable {
 
     @Override
     public Task getTask(int index) {
-        return node(index).data;
+        return node(index).element;
     }
 
     /**
@@ -41,12 +44,12 @@ public class LinkedTaskList extends AbstractTaskList implements Cloneable {
         }
         Node x;
         if (index < size / 2) {
-            x = head;
+            x = first;
             for (int i = 0; i < index; i++) {
                 x = x.next;
             }
         } else {
-            x = tail;
+            x = last;
             for (int i = size - 1; i > index; i--) {
                 x = x.prev;
             }
@@ -62,13 +65,13 @@ public class LinkedTaskList extends AbstractTaskList implements Cloneable {
 
         Node x = new Node(task);
 
-        if (head == null) {
-            head = x;
-            tail = head;
+        if (first == null) {
+            first = x;
+            last = first;
         } else {
-            x.prev = tail == head ? head : tail;
-            tail.next = x;
-            tail = x;
+            x.prev = last == first ? first : last;
+            last.next = x;
+            last = x;
         }
         size++;
     }
@@ -79,9 +82,9 @@ public class LinkedTaskList extends AbstractTaskList implements Cloneable {
             return false;
         }
 
-        Node x = head;
+        Node x = first;
         while (x != null) {
-            if (x.data.equals(task)) {
+            if (x.element.equals(task)) {
                 unlink(x);
                 return true;
             }
@@ -101,14 +104,14 @@ public class LinkedTaskList extends AbstractTaskList implements Cloneable {
         final Node prev = x.prev;
 
         if (prev == null) {
-            head = next;
+            first = next;
         } else {
             prev.next = next;
             x.prev = null;
         }
 
         if (next == null) {
-            tail = prev;
+            last = prev;
         } else {
             next.prev = prev;
             x.next = null;
@@ -120,7 +123,7 @@ public class LinkedTaskList extends AbstractTaskList implements Cloneable {
     public Iterator<Task> iterator() {
         return new Iterator<Task>() {
             int cursor;
-            Node next = head;
+            Node next = first;
             Node lastReturned;
 
             @Override
@@ -136,7 +139,7 @@ public class LinkedTaskList extends AbstractTaskList implements Cloneable {
                 lastReturned = next;
                 next = next.next;
                 cursor++;
-                return lastReturned.data;
+                return lastReturned.element;
             }
 
             @Override
@@ -157,7 +160,7 @@ public class LinkedTaskList extends AbstractTaskList implements Cloneable {
         try {
             LinkedTaskList clone = (LinkedTaskList) super.clone();
             clone.size = 0;
-            clone.head = clone.tail = null;
+            clone.first = clone.last = null;
             for (Task task : this) {
                 clone.add(task.clone());
             }
@@ -168,17 +171,26 @@ public class LinkedTaskList extends AbstractTaskList implements Cloneable {
     }
 
     @Override
+    public Stream<Task> getStream() {
+        List<Task> list = new LinkedList<>();
+        for (Task task : this) {
+            list.add(task);
+        }
+        return list.stream();
+    }
+
+    @Override
     public String toString() {
         return "LinkedTaskList" + super.toString();
     }
 
     private static class Node {
-        private final Task data;
+        private final Task element;
         private Node next;
         private Node prev;
 
-        Node(Task data) {
-            this.data = data;
+        Node(Task element) {
+            this.element = element;
         }
     }
 }

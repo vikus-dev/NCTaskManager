@@ -1,7 +1,9 @@
 package ua.edu.sumdu.j2se.kush.tasks;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.stream.Stream;
 
 /**
  * A list of tasks based on an array.
@@ -11,13 +13,13 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
     /**
      * An array to store added tasks.
      */
-    private Task[] taskList;
+    private Task[] list;
 
     /**
      * This constructor is to create an empty list.
      */
     public ArrayTaskList() {
-        taskList = new Task[]{};
+        list = new Task[]{};
     }
 
     /**
@@ -27,9 +29,9 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
      */
     public ArrayTaskList(int initialCapacity) {
         if (initialCapacity > 0) {
-            taskList = new Task[initialCapacity];
+            list = new Task[initialCapacity];
         } else if (initialCapacity == 0) {
-            taskList = new Task[]{};
+            list = new Task[]{};
         } else {
             throw new NegativeArraySizeException("Capacity must be a "
                     + "positive number.");
@@ -47,25 +49,25 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
             throw new IndexOutOfBoundsException("Index: " + index
                     + ", size: " + size);
         }
-        return taskList[index];
+        return list[index];
     }
 
     @Override
     public void add(Task task) {
         if (task != null) {
             ensureCapacity(size + 1);
-            taskList[size++] = task;
+            list[size++] = task;
         }
     }
 
     private void ensureCapacity(int minCapacity) {
-        if (minCapacity - taskList.length > 0) {
+        if (minCapacity - list.length > 0) {
             grow(minCapacity);
         }
     }
 
     /**
-     * Increases the capacity of the {@link #taskList}.
+     * Increases the capacity of the {@link #list}.
      *
      * @param minCapacity the minimum required capacity of this list.
      */
@@ -73,18 +75,18 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
         int newCapacity = minCapacity + (minCapacity / 2);
         Task[] tmp = new Task[newCapacity];
         if (size > 0) {
-            System.arraycopy(taskList, 0, tmp, 0, size);
+            System.arraycopy(list, 0, tmp, 0, size);
         }
-        taskList = tmp;
+        list = tmp;
     }
 
     /**
-     * Truncates the {@link #taskList} to size taskList.size()
+     * Truncates the {@link #list} to size taskList.size()
      */
     private void trimToSize() {
         Task[] tmp = new Task[size];
-        System.arraycopy(taskList, 0, tmp, 0, size);
-        taskList = tmp;
+        System.arraycopy(list, 0, tmp, 0, size);
+        list = tmp;
     }
 
     @Override
@@ -98,15 +100,15 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
         int numberOfTasksToShift = size - index - 1;
 
         if (numberOfTasksToShift > 0) {
-            System.arraycopy(taskList, index + 1, taskList,
+            System.arraycopy(list, index + 1, list,
                     index, numberOfTasksToShift);
         }
 
-        taskList[--size] = null;
+        list[--size] = null;
 
         // Make sure the taskList array is not too large
         // after deleting the task.
-        if (taskList.length - size > (size >> 1)) {
+        if (list.length - size > (size >> 1)) {
             trimToSize();
         }
 
@@ -126,7 +128,7 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
         }
 
         for (int i = 0; i < size; i++) {
-            if (task.equals(taskList[i])) {
+            if (task.equals(list[i])) {
                 return i;
             }
         }
@@ -150,7 +152,7 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
                 if (cursor >= size) {
                     throw new NoSuchElementException();
                 }
-                Task[] tasks = ArrayTaskList.this.taskList;
+                Task[] tasks = ArrayTaskList.this.list;
                 cursor = i + 1;
                 return tasks[lastRet = i];
             }
@@ -162,7 +164,7 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
                             "Method remove() should be called after next()");
                 }
 
-                ArrayTaskList.this.remove(ArrayTaskList.this.taskList[lastRet]);
+                ArrayTaskList.this.remove(ArrayTaskList.this.list[lastRet]);
                 cursor = lastRet;
                 lastRet = -1;
             }
@@ -173,7 +175,7 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
     public ArrayTaskList clone() {
         try {
             ArrayTaskList clone = (ArrayTaskList) super.clone();
-            clone.taskList = new Task[size];
+            clone.list = new Task[size];
             clone.size = 0;
             for (Task task : this) {
                 clone.add(task.clone());
@@ -182,6 +184,11 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
         } catch (CloneNotSupportedException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    @Override
+    public Stream<Task> getStream() {
+        return Arrays.stream(this.list);
     }
 
     @Override
