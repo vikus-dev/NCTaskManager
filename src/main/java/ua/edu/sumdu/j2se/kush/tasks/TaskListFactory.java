@@ -7,8 +7,8 @@ public abstract class TaskListFactory {
                 return new ArrayTaskList();
             case LINKED:
                 return new LinkedTaskList();
+            default:
+                throw new IllegalArgumentException();
         }
-
-        return null;
     }
 }
