@@ -62,7 +62,7 @@ public abstract class AbstractTaskList implements Iterable<Task> {
         AbstractTaskList list = TaskListFactory.createTaskList(getListType());
         getStream().filter(Objects::nonNull).filter(t -> {
             int nextTime = t.nextTimeAfter(from);
-            return from <= nextTime && nextTime < to;
+            return from <= nextTime && nextTime <= to;
         }).forEach(list::add);
         return list;
     }
