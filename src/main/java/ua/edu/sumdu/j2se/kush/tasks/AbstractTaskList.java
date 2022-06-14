@@ -1,7 +1,6 @@
 package ua.edu.sumdu.j2se.kush.tasks;
 
 import java.util.Iterator;
-import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
@@ -60,7 +59,8 @@ public abstract class AbstractTaskList implements Iterable<Task> {
 
     public final AbstractTaskList incoming(int from, int to) {
         AbstractTaskList list = TaskListFactory.createTaskList(getListType());
-        getStream().filter(Objects::nonNull).filter(t -> {
+
+        getStream().filter(t -> {
             int nextTime = t.nextTimeAfter(from);
             return from <= nextTime && nextTime <= to;
         }).forEach(list::add);

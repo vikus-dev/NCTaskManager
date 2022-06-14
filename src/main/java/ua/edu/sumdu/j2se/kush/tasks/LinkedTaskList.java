@@ -1,10 +1,7 @@
 package ua.edu.sumdu.j2se.kush.tasks;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.LinkedList;
+import java.util.*;
 import java.util.stream.Stream;
-import java.util.NoSuchElementException;
 
 /**
  * A list of tasks based on a linked list.
@@ -172,7 +169,7 @@ public class LinkedTaskList extends AbstractTaskList implements Cloneable {
 
     @Override
     public Stream<Task> getStream() {
-        List<Task> list = new LinkedList<>();
+        List<Task> list = new ArrayList<>();
         for (Task task : this) {
             list.add(task);
         }

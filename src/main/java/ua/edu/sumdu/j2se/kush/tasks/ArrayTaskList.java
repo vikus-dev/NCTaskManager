@@ -2,6 +2,7 @@ package ua.edu.sumdu.j2se.kush.tasks;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
@@ -187,7 +188,7 @@ public class ArrayTaskList extends AbstractTaskList implements Cloneable {
 
     @Override
     public Stream<Task> getStream() {
-        return Stream.of(list);
+        return Stream.of(list).filter(Objects::nonNull);
     }
 
     @Override
