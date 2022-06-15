@@ -1,6 +1,8 @@
 package ua.edu.sumdu.j2se.kush.tasks;
 
+import java.time.LocalDateTime;
 import java.util.Iterator;
+import java.util.Objects;
 import java.util.stream.Stream;
 
 /**
@@ -57,16 +59,6 @@ public abstract class AbstractTaskList implements Iterable<Task> {
      */
     public abstract boolean remove(Task task);
 
-    public final AbstractTaskList incoming(int from, int to) {
-        AbstractTaskList list = TaskListFactory.createTaskList(getListType());
-
-        getStream().filter(t -> {
-            int nextTime = t.nextTimeAfter(from);
-            return from <= nextTime && nextTime <= to;
-        }).forEach(list::add);
-        return list;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -77,9 +69,7 @@ public abstract class AbstractTaskList implements Iterable<Task> {
         Iterator<Task> itr1 = iterator();
         Iterator<Task> itr2 = obj.iterator();
         while (itr1.hasNext()) {
-            if (!itr1.next().equals(itr2.next())) {
-                return false;
-            }
+            if (!Objects.equals(itr1.next(), itr2.next())) return false;
         }
         return true;
     }
