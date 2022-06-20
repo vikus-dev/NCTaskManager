@@ -7,6 +7,8 @@ import java.util.stream.Stream;
 
 /**
  * A list of tasks based on an array.
+ *
+ * @author <a href="mailto:vitaly.kush@gmail.com">Vitalii Kush</a>
  */
 public class ArrayTaskList extends AbstractTaskList implements Cloneable {
 
