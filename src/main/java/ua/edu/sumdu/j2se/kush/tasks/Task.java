@@ -1,5 +1,6 @@
 package ua.edu.sumdu.j2se.kush.tasks;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.Objects;
@@ -12,7 +13,7 @@ import java.util.Objects;
  *
  * @author <a href="mailto:vitaly.kush@gmail.com">Vitalii Kush</a>
  */
-public class Task implements Cloneable {
+public class Task implements Cloneable, Serializable {
 
     /**
      * Task name (brief task description).
@@ -75,9 +76,7 @@ public class Task implements Cloneable {
      * @param end      task end time.
      * @param interval task recurrence interval.
      */
-    public Task(String title,
-                LocalDateTime start,
-                LocalDateTime end,
+    public Task(String title, LocalDateTime start, LocalDateTime end,
                 int interval) {
 
         if (title == null) {

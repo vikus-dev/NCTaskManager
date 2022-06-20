@@ -1,10 +1,15 @@
 package ua.edu.sumdu.j2se.kush.tasks;
 
-import java.util.*;
+import java.io.Serializable;
+import java.util.Iterator;
+import java.util.NoSuchElementException;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * A list of tasks based on a linked list.
+ *
+ * @author <a href="mailto:vitaly.kush@gmail.com">Vitalii Kush</a>
  */
 public class LinkedTaskList extends AbstractTaskList implements Cloneable {
 
@@ -169,11 +174,7 @@ public class LinkedTaskList extends AbstractTaskList implements Cloneable {
 
     @Override
     public Stream<Task> getStream() {
-        List<Task> list = new ArrayList<>();
-        for (Task task : this) {
-            list.add(task);
-        }
-        return list.stream();
+        return StreamSupport.stream(this.spliterator(), false);
     }
 
     @Override
@@ -181,7 +182,7 @@ public class LinkedTaskList extends AbstractTaskList implements Cloneable {
         return "LinkedTaskList" + super.toString();
     }
 
-    private static class Node {
+    private static class Node implements Serializable {
         private final Task element;
         private Node next;
         private Node prev;

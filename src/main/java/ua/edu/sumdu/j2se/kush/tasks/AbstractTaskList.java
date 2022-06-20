@@ -1,5 +1,6 @@
 package ua.edu.sumdu.j2se.kush.tasks;
 
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.Objects;
@@ -11,8 +12,10 @@ import java.util.stream.Stream;
  * @see ArrayTaskList
  * @see LinkedTaskList
  * @see ListTypes
+ * @author <a href="mailto:vitaly.kush@gmail.com">Vitalii Kush</a>
  */
-public abstract class AbstractTaskList implements Iterable<Task> {
+public abstract class AbstractTaskList
+        implements Iterable<Task>, Serializable {
 
     /**
      * The size of this list (the number of elements it contains).

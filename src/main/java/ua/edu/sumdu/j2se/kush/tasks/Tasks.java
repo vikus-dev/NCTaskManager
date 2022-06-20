@@ -9,6 +9,13 @@ import java.util.TreeMap;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+/**
+ * Task Class.<br/>
+ * The method incoming() filters task list by the time interval.<br/>
+ * The method calendar() builds the timeline for all filtered tasks.
+ *
+ * @author <a href="mailto:vitaly.kush@gmail.com">Vitalii Kush</a>
+ */
 public class Tasks {
 
     /**
@@ -29,7 +36,6 @@ public class Tasks {
                         && !t.nextTimeAfter(start).isAfter(end)
                 ).collect(Collectors.toList());
     }
-
 
     /**
      * Returns a schedule of tasks that can run during the specified period.
