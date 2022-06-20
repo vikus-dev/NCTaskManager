@@ -142,9 +142,14 @@ public class TaskIO {
 
     /**
      * Reads JSON from input and writes it to the specified task list.
+<<<<<<< HEAD
      *
      * @param tasks the task list.
      * @param in    the input to read.
+=======
+     * @param tasks the task list.
+     * @param in the input to read.
+>>>>>>> 0ca1153cbbdf4aea237d858cf80c816e83873c0a
      */
     public static void read(AbstractTaskList tasks, Reader in) {
         Gson gson = new GsonBuilder().serializeNulls().create();
