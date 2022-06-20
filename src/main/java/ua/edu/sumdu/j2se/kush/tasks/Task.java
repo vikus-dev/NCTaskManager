@@ -15,6 +15,8 @@ import java.util.Objects;
  */
 public class Task implements Cloneable, Serializable {
 
+    private static final long serialVersionUID = -8816909865961436667L;
+
     /**
      * Task name (brief task description).
      */
