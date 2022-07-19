@@ -1,4 +1,4 @@
-package ua.edu.sumdu.j2se.kush.tasks;
+package ua.edu.sumdu.j2se.kush.tasks.model;
 
 import java.io.Serializable;
 import java.util.Iterator;

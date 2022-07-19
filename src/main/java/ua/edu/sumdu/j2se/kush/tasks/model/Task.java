@@ -1,4 +1,4 @@
-package ua.edu.sumdu.j2se.kush.tasks;
+package ua.edu.sumdu.j2se.kush.tasks.model;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
@@ -277,30 +277,30 @@ public class Task implements Cloneable, Serializable {
 
     /**
      * Calculates the next execution time for the task.
-     * <p>The method returns -1 in the following cases:</p>
+     * <p>The method returns null in the following cases:</p>
      * <ul>
      * <li>the task is not active.</li>
-     * <li>the non-repetitive task time less than current time</li>
-     * <li>the repetitive task end time less than current time</li>
+     * <li>the non-repetitive task time less than specified time</li>
+     * <li>the repetitive task end time less than specified time</li>
      * <li>the repetitive task next time more than end time</li>
      * </ul>
      * <p>Otherwise, returns the next time the task should be executed.</p>
      *
-     * @param current current time.
-     * @return the next time of the task or -1.
+     * @param dateTime time.
+     * @return the next time of the task or null.
      */
-    public LocalDateTime nextTimeAfter(LocalDateTime current) {
+    public LocalDateTime nextTimeAfter(LocalDateTime dateTime) {
         if (!isActive) {
             return null;
         }
         LocalDateTime next = null;
         if (!isRepeated) {
-            next = current.isBefore(time) ? time : null;
-        } else if (current.isBefore(start)) {
+            next = dateTime.isBefore(time) ? time : null;
+        } else if (dateTime.isBefore(start)) {
             next = start;
-        } else if (!current.isAfter(end)) {
-            long diff = ChronoUnit.SECONDS.between(start, current);
-            next = start.plusSeconds(interval * (diff / interval + 1));
+        } else if (!dateTime.isAfter(end)) {
+            long diff = ChronoUnit.MINUTES.between(start, dateTime);
+            next = start.plusMinutes(interval * (diff / interval + 1));
             next = !next.isAfter(end) ? next : null;
         }
         return next;
@@ -312,7 +312,7 @@ public class Task implements Cloneable, Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Task task = (Task) o;
 
-        return time.equals(task.time)
+        return time == task.time
                 && start == task.start
                 && end == task.end
                 && interval == task.interval

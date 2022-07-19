@@ -1,5 +1,7 @@
 .idea/
 docs/
 target/
+db/
+logs/
 NCTaskManager.iml
 

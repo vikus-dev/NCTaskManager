@@ -1,8 +1,10 @@
-package ua.edu.sumdu.j2se.kush.tasks;
+package ua.edu.sumdu.j2se.kush.tasks.utils;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import ua.edu.sumdu.j2se.kush.tasks.model.AbstractTaskList;
+import ua.edu.sumdu.j2se.kush.tasks.model.Task;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
