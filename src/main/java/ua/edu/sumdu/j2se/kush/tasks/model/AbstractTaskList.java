@@ -1,7 +1,6 @@
-package ua.edu.sumdu.j2se.kush.tasks;
+package ua.edu.sumdu.j2se.kush.tasks.model;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Iterator;
 import java.util.Objects;
 import java.util.stream.Stream;

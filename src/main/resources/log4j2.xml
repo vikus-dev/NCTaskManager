@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" name="TaskManager">
+  <Appenders>
+    <RollingFile name="LogFile"
+                 fileName="logs/app.log"
+                 filePattern="logs/app-%d{MM-dd-yyyy}.log.gz">
+      <SizeBasedTriggeringPolicy>
+        <Size>500</Size>
+      </SizeBasedTriggeringPolicy>
+      <PatternLayout>
+<!--        <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>-->
+        <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - %m%n</Pattern>
+      </PatternLayout>
+    </RollingFile>
+  </Appenders>
+  <Loggers>
+    <Root level="info">
+      <AppenderRef ref="LogFile"/>
+    </Root>
+  </Loggers>
+</Configuration>

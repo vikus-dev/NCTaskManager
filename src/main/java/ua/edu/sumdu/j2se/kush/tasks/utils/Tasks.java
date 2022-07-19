@@ -1,4 +1,6 @@
-package ua.edu.sumdu.j2se.kush.tasks;
+package ua.edu.sumdu.j2se.kush.tasks.utils;
+
+import ua.edu.sumdu.j2se.kush.tasks.model.Task;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
