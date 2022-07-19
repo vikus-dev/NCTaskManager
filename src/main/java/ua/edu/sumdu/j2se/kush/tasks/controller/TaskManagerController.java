@@ -4,7 +4,6 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import ua.edu.sumdu.j2se.kush.tasks.model.Task;
 import ua.edu.sumdu.j2se.kush.tasks.model.TaskManagerModel;
-import ua.edu.sumdu.j2se.kush.tasks.utils.TaskIO;
 import ua.edu.sumdu.j2se.kush.tasks.utils.Tasks;
 import ua.edu.sumdu.j2se.kush.tasks.view.TaskManagerView;
 
